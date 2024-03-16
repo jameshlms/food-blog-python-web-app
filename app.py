@@ -7,6 +7,14 @@ import pyrebase
 
 from models import user, blog, post
 
+
+# Use a service account.
+cred = credentials.Certificate('path/to/serviceAccount.json')
+
+app = firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
 app = Flask(__name__)
 
 @app.route("/")
