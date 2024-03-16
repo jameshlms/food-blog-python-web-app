@@ -9,14 +9,14 @@ class User:
         email (str): The user's chosen email.
         date_created (datetime): The date the user was created.
         image_url (str): URL to the user's profile image.
-        uid (str): The unique identifier for the user.
+        doc_id (str): The unique identifier for the user.
         viewers (list): List of viewers of the user's profile.
         description (str): A brief description of the user.
         tags (list): Tags associated with the user.
     """
     
     def __init__(self, username: str, email: str, date_created: dt, 
-                 image_url: str, uid: str, viewers: list, 
+                 image_url: str, doc_id: str, user_uid : str, viewers: list, 
                  description: str, tags: list, posts: list):
         """
         Constructs all the necessary attributes for the user object.
@@ -26,7 +26,7 @@ class User:
             email (str): The user's chosen email.
             date_created (datetime): The date the user was created.
             image_url (str): URL to the user's profile image.
-            uid (str): The unique identifier for the user.
+            doc_id (str): The unique identifier for the user.
             viewers (list): List of viewers of the user's profile.
             description (str): A brief description of the user.
             tags (list): Tags associated with the user.
@@ -35,7 +35,8 @@ class User:
         self.email = email
         self.date_created = date_created
         self.image_url = image_url
-        self.uid = uid
+        self.doc_id = doc_id
+        self.user_uid = user_uid
         self.viewers = viewers
         self.description = description
         self.tags = tags

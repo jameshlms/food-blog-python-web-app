@@ -1,4 +1,5 @@
 from datetime import datetime
+from uuid import uuid1
 
 from flask import Flask, render_template
 import firebase_admin
@@ -16,19 +17,20 @@ app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 firebase_config : dict = {
-    
+    "apiKey": "AIzaSyCw9pPSkN9hQT9N7-KNWkpn1hxH1A6VBAo",
+    "authDomain": "dormroom-delights.firebaseapp.com",
+    "projectId": "dormroom-delights",
+    "storageBucket": "dormroom-delights.appspot.com",
+    "messagingSenderId": "28608723346",
+    "appId": "1:28608723346:web:73ff6ada634ee3c628694b",
+    "measurementId": "G-RV1K36M957",
+    "databaseURL": ""
 }
 
 pyrebase_app = pyrebase.initialize_app(firebase_config)
 auth = pyrebase_app.auth()
 
 app = Flask(__name__)
-
-def add_user_in_firestore():
-    username : str = input("Enter a username: ")
-    email : str = input("Enter an email: ")
-    password : str = input("Enter a password")
-
 
 @app.route("/")
 def home():
@@ -37,10 +39,18 @@ def home():
 @app.route("/hello/")
 @app.route("/hello/<name>")
 def hello_there(name = None):
+    username : str = input("Enter a username: ")
+    email : str = input("Enter an email: ")
+    password : str = input("Enter a password")
+
+    user: dict = auth.create_user_with_email_and_password(email, password)
+    user_uid: str = user["localId"]
+
     doc_ref = db.collection("users").document()
     doc_id = doc_ref.id
-    user = User(name, "tiffxnycho", datetime.now(), "www.instagram.com", doc_id, [], "18", [])
+    user = User(username, email, datetime.now(), "brwblwghrougblbwlefbkwg", doc_id, user_uid, [], "", [], [])
     data = user.__dict__
+    print(data)
     doc_ref.set(data)
     return render_template(
         "user_profile_page.html",
