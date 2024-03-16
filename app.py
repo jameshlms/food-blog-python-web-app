@@ -10,7 +10,7 @@ from models.user import User
 
 from service_account_key import ServiceAccountKey
 
-# Use a service account.
+# Use a service account. serv
 service_account_key = ServiceAccountKey()
 cred = credentials.Certificate(service_account_key.key)
 app = firebase_admin.initialize_app(cred)
