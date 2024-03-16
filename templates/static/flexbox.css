@@ -1,0 +1,18 @@
+.rectangle {
+    width: "200";
+    height: "100";
+    fill: "blue";
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+.image {
+    width: "50";
+    height: "50";
+    position: fixed;
+    top: "40px";
+    left: "35px";
+}
