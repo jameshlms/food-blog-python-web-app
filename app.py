@@ -6,10 +6,11 @@ from firebase_admin import credentials, firestore
 import pyrebase
 
 from models import user, blog, post
-
+from service_account_key import ServiceAccountKey
 
 # Use a service account.
-cred = credentials.Certificate('path/to/serviceAccount.json')
+service_account_key = ServiceAccountKey()
+cred = credentials.Certificate(service_account_key.key)
 
 app = firebase_admin.initialize_app(cred)
 
