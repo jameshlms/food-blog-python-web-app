@@ -40,14 +40,27 @@ def create_user():
     auth_user: dict = auth.create_user_with_email_and_password(email, password)
     user_uid: str = auth_user["localId"]
 
-    doc_ref = db.collection("users").document()
+    doc_ref = db.collection("users").document(user_uid)
     doc_id = doc_ref.id
-    user = User(username, email, datetime.now(), "brwblwghrougblbwlefbkwg", doc_id, user_uid, [], "", [], [])
+    user = User(username, email, datetime.now(), "", doc_id, user_uid, [], "", [], [])
     current_username = username
     current_user_uid = user_uid
     data = user.__dict__
     print("Account created!")
     doc_ref.set(data)
+
+def sign_in_user():
+    email : str = input("Enter your email:\n>")
+    password : str = input("Enter your password:\n>")
+
+    auth_user: dict = auth.sign_in_with_email_and_password(email, password)
+    current_user_uid: str = auth_user["localId"]
+
+    doc_ref = db.collection('users').document(current_user_uid)
+    doc_snapshot = doc_ref.get().to_dict()
+    user = User(doc_snapshot['username'], doc_snapshot['email'], doc_snapshot['date_created'], doc_snapshot['image_url'], doc_snapshot['doc_id'], doc_snapshot['user_uid'], doc_snapshot['viewers'], doc_snapshot['description'], doc_snapshot['tags'], doc_snapshot['posts'])
+    current_username = user.get_username()
+    current_user_uid = user.get_user_uid()
 
 def create_post():
     doc_ref = db.collection("posts").document()
@@ -68,6 +81,21 @@ def create_post():
     print("Post created!")
     doc_ref.set(data)
 
+def show_posts():
+    collection_ref = db.collection('posts')
+
+    # Define the keyword to search for
+    keyword = input("Enter a keyword: ")
+
+    # Create a query to find documents where the name field contains the keyword
+    query = collection_ref.where(filter=FieldFilter("state", "==", "CA"))
+
+    # Execute the query
+    results = query.stream()
+
+    # Iterate through the results and print document data
+    for doc in results:
+        print(f'{doc.id} => {doc.to_dict()}')
 
 is_invalid_input : bool = True
 should_continue : bool = False
@@ -76,7 +104,8 @@ while is_invalid_input is True:
     action = input("Type the action to be performed (for a list of actions, type \'list\'): ")
     if action == 'log in':
         is_invalid_input = False
-        pass
+        should_continue = True
+        sign_in_user()
     elif action == 'sign up':
         is_invalid_input = False
         should_continue = True
@@ -100,6 +129,8 @@ if should_continue == True:
         action = input("Please enter your next desired action: ")
         if action == 'create post':
             create_post()
+        elif action == 'search posts':
+            show_posts()
         elif action == 'quit':
             is_invalid_input = False
         else:
