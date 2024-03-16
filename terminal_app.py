@@ -61,8 +61,9 @@ def sign_in_user():
     user = User(doc_snapshot['username'], doc_snapshot['email'], doc_snapshot['date_created'], doc_snapshot['image_url'], doc_snapshot['doc_id'], doc_snapshot['user_uid'], doc_snapshot['viewers'], doc_snapshot['description'], doc_snapshot['tags'], doc_snapshot['posts'])
     current_username = user.get_username()
     current_user_uid = user.get_user_uid()
-    print(current_user_uid)
-    print(current_username)
+    current_date_created = user.get_date_created()
+    print(f'Your username is {current_username} and your account was created on {current_date_created}')
+    
 
 def create_post():
     doc_ref = db.collection("posts").document()
@@ -83,27 +84,11 @@ def create_post():
     print("Post created!")
     doc_ref.set(data)
 
-def show_posts():
-    collection_ref = db.collection('posts')
-
-    # Define the keyword to search for
-    keyword = input("Enter a keyword: ")
-
-    # Create a query to find documents where the name field contains the keyword
-    query = collection_ref.where(filter=FieldFilter("state", "==", "CA"))
-
-    # Execute the query
-    results = query.stream()
-
-    # Iterate through the results and print document data
-    for doc in results:
-        print(f'{doc.id} => {doc.to_dict()}')
-
 is_invalid_input : bool = True
 should_continue : bool = False
 
 while is_invalid_input is True:
-    action = input("Type the action to be performed (for a list of actions, type \'list\'): ")
+    action = input("Type the action to be performed (for a list of actions, type \'list\'):\n> ")
     if action == 'log in':
         is_invalid_input = False
         should_continue = True
@@ -126,11 +111,14 @@ is_invalid_input = True
 
 if should_continue == True:
     while is_invalid_input == True:
-        action = input("Please enter your next desired action: ")
+        action = input("Please enter your next desired action (enter \'list\' for a list of actions):\n> ")
         if action == 'create post':
             create_post()
         elif action == 'search posts':
-            show_posts()
+            # show_posts()
+            pass
+        elif action == 'list':
+            print('The list of actions are:\n    \'create post\'\n    \'search posts\'\n    \'quit\'')
         elif action == 'quit':
             is_invalid_input = False
         else:

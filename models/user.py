@@ -83,3 +83,6 @@ class User:
     
     def get_user_uid(self):
         return self.user_uid
+    
+    def get_date_created(self):
+        return self.date_created
