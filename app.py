@@ -12,12 +12,23 @@ from service_account_key import ServiceAccountKey
 # Use a service account.
 service_account_key = ServiceAccountKey()
 cred = credentials.Certificate(service_account_key.key)
-
 app = firebase_admin.initialize_app(cred)
-
 db = firestore.client()
 
+firebase_config : dict = {
+    
+}
+
+pyrebase_app = pyrebase.initialize_app(firebase_config)
+auth = pyrebase_app.auth()
+
 app = Flask(__name__)
+
+def add_user_in_firestore():
+    username : str = input("Enter a username: ")
+    email : str = input("Enter an email: ")
+    password : str = input("Enter a password")
+
 
 @app.route("/")
 def home():

@@ -6,7 +6,7 @@ class User:
 
     Attributes:
         name (str): The full name of the user.
-        username (str): The user's chosen username.
+        email (str): The user's chosen email.
         date_created (datetime): The date the user was created.
         image_url (str): URL to the user's profile image.
         uid (str): The unique identifier for the user.
@@ -15,15 +15,15 @@ class User:
         tags (list): Tags associated with the user.
     """
     
-    def __init__(self, name: str, username: str, date_created: dt, 
+    def __init__(self, username: str, email: str, date_created: dt, 
                  image_url: str, uid: str, viewers: list, 
-                 description: str, tags: list):
+                 description: str, tags: list, posts: list):
         """
         Constructs all the necessary attributes for the user object.
 
         Parameters:
-            name (str): The full name of the user.
             username (str): The user's chosen username.
+            email (str): The user's chosen email.
             date_created (datetime): The date the user was created.
             image_url (str): URL to the user's profile image.
             uid (str): The unique identifier for the user.
@@ -31,23 +31,15 @@ class User:
             description (str): A brief description of the user.
             tags (list): Tags associated with the user.
         """
-        self.name = name
         self.username = username
+        self.email = email
         self.date_created = date_created
         self.image_url = image_url
         self.uid = uid
         self.viewers = viewers
         self.description = description
         self.tags = tags
-
-    def modify_name(self, new_name: str):
-        """
-        Changes the user's name.
-
-        Parameters:
-            new_name (str): The new name to assign to the user.
-        """
-        self.name = new_name
+        self.posts = posts
 
     def modify_username(self, new_username: str):
         """
@@ -57,6 +49,15 @@ class User:
             new_username (str): The new username to assign to the user.
         """
         self.username = new_username
+
+    def modify_email(self, new_email: str):
+        """
+        Changes the user's email.
+
+        Parameters:
+            new_email (str): The new email to assign to the user.
+        """
+        self.email = new_email
 
     def modify_viewers(self, new_viewers: list):
         """
