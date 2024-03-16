@@ -121,7 +121,7 @@ if should_continue == True:
         if action == 'create post':
             create_post()
         elif action == 'search posts':
-            # show_posts()
+            find_post()
             pass
         elif action == 'list':
             print('The list of actions are:\n    \'create post\'\n    \'search posts\'\n    \'quit\'')
