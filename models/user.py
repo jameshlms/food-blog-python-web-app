@@ -77,3 +77,9 @@ class User:
             new_description (str): The new description to assign to the user.
         """
         self.description = new_description
+
+    def get_username(self):
+        return self.username
+    
+    def get_user_uid(self):
+        return self.user_uid
