@@ -33,9 +33,9 @@ current_username = ""
 current_user_uid = ""
 
 def create_user():
-    username : str = input("Enter a username: ")
-    email : str = input("Enter an email: ")
-    password : str = input("Enter a password: ")
+    username : str = input("Enter a username:\n> ")
+    email : str = input("Enter an email:\n> ")
+    password : str = input("Enter a password:\n> ")
 
     auth_user: dict = auth.create_user_with_email_and_password(email, password)
     user_uid: str = auth_user["localId"]
@@ -50,8 +50,8 @@ def create_user():
     doc_ref.set(data)
 
 def sign_in_user():
-    email : str = input("Enter your email:\n>")
-    password : str = input("Enter your password:\n>")
+    email : str = input("Enter your email:\n> ")
+    password : str = input("Enter your password:\n> ")
 
     auth_user: dict = auth.sign_in_with_email_and_password(email, password)
     current_user_uid: str = auth_user["localId"]
@@ -61,6 +61,8 @@ def sign_in_user():
     user = User(doc_snapshot['username'], doc_snapshot['email'], doc_snapshot['date_created'], doc_snapshot['image_url'], doc_snapshot['doc_id'], doc_snapshot['user_uid'], doc_snapshot['viewers'], doc_snapshot['description'], doc_snapshot['tags'], doc_snapshot['posts'])
     current_username = user.get_username()
     current_user_uid = user.get_user_uid()
+    print(current_user_uid)
+    print(current_username)
 
 def create_post():
     doc_ref = db.collection("posts").document()
@@ -119,8 +121,6 @@ while is_invalid_input is True:
     else:
         is_invalid_input = True
         print('Please enter a valid action.')
-
-    print('\n')
 
 is_invalid_input = True
 
