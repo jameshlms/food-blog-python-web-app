@@ -81,8 +81,14 @@ def create_post():
     
     post = Post(header, author, rating, date_created, date_updated, instructions, description, ingredients, doc_id, owner_uid)
     data = post.__dict__
-    print("Post created!")
+    print(f"Post created! your post id is {doc_id}")
     doc_ref.set(data)
+
+def find_post():
+    doc_id = input("Please enter the id of the post you'd like to find:\n> ")
+    doc_ref = db.collection('posts').document(doc_id)
+    document = doc_ref.get()
+    print(document.to_dict())
 
 is_invalid_input : bool = True
 should_continue : bool = False

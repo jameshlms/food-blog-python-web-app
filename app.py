@@ -34,7 +34,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello, Flask!"
+    return render_template('sign_up_page.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -46,7 +46,7 @@ def submit():
 
     doc_ref = db.collection("users").document()
     doc_id = doc_ref.id
-    user = User(username, email, datetime.now(), "brwblwghrougblbwlefbkwg", doc_id, user_uid, [], "", [], [])
+    user = User(username, email, datetime.now(), "", doc_id, user_uid, [], "", [], [])
     data = user.__dict__
     print(data)
     doc_ref.set(data)
